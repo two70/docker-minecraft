@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  server:
+    image: ghcr.io/two70/docker-minecraft:latest
+    container_name: minecraft-spigot
+    restart: on-failure
+    stdin_open: true
+    tty: true
+    ports:
+      - 25565:25565
+    volumes:
+      - $PWD/server_data:/minecraft
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 2G
