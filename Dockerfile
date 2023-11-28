@@ -1,17 +1,17 @@
-FROM debian:stable as builder
+FROM ubuntu as builder
 RUN mkdir /build
 WORKDIR /build
 RUN apt update
 RUN apt install bash ca-certificates wget git -y # install first to avoid openjdk install bug
-RUN apt install openjdk-17-jre-headless -y
+RUN apt install openjdk-19-jre-headless -y
 RUN wget -O BuildTools.jar https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar
 RUN git config --global --unset core.autocrlf || exit 0
 RUN java -jar BuildTools.jar --rev latest #change to specific version if you don't want latest STABLE release
 RUN mv spigot-*.jar spigot.jar
 
-FROM debian:stable
+FROM ubuntu
 RUN apt update
-RUN apt install openjdk-17-jre-headless bash -y
+RUN apt install openjdk-19-jre-headless bash -y
 RUN mkdir /server /minecraft
 RUN adduser --system --shell /bin/bash --group minecraft
 COPY --from=builder --chown=minecraft:minecraft /build/spigot.jar /server
