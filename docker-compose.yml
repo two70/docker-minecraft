@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   server:
-    image: ghcr.io/two70/docker-minecraft:latest
+    image: ghcr.io/two70/docker-minecraft:1.16.5
     container_name: minecraft-spigot
     restart: on-failure
     stdin_open: true
