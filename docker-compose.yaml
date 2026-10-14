@@ -18,6 +18,8 @@ services:
       CF_API_KEY: ${CF_API_KEY:-}
       CF_SLUG: ${CF_SLUG:-}
       CF_FILE_ID: ${CF_FILE_ID:-}
+      # Extra CurseForge mods on top of the pack: slug or slug:fileId, comma-separated
+      CURSEFORGE_FILES: ${CURSEFORGE_FILES:-}
       MEMORY: ${MEMORY}
       MAX_MEMORY: ${MAX_MEMORY}
       DEBUG: ${DEBUG}
