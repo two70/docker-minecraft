@@ -9,9 +9,15 @@ services:
       TZ: ${TZ}
       # REQUIRED for all types
       EULA: ${EULA}
-      # Set server type (vs the default of vanilla)
+      # Server type: AUTO_CURSEFORGE installs a CurseForge modpack (mods + loader)
       TYPE: ${TYPE}
-      VERSION: ${VERSION}
+      # Used when TYPE is not AUTO_CURSEFORGE (the modpack sets these otherwise)
+      VERSION: ${VERSION:-LATEST}
+      NEOFORGE_VERSION: ${NEOFORGE_VERSION:-LATEST}
+      # CurseForge modpack (TYPE=AUTO_CURSEFORGE)
+      CF_API_KEY: ${CF_API_KEY:-}
+      CF_SLUG: ${CF_SLUG:-}
+      CF_FILE_ID: ${CF_FILE_ID:-}
       MEMORY: ${MEMORY}
       MAX_MEMORY: ${MAX_MEMORY}
       DEBUG: ${DEBUG}
@@ -23,9 +29,12 @@ services:
       OPS: ${OPS}
       WHITELIST: ${WHITELIST}
     volumes:
-    # host directory for server data
-    - ${DATA_DIR}:/data
+    # named, managed volume for server data
+    - data:/data
     # attach local host directory "mods" in same directory as this compose file
     # all mods in this directory get copied into /data/mods at startup
     #- ./mods:/mods:ro
     restart: always
+
+volumes:
+  data:
