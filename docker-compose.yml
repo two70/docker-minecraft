@@ -23,7 +23,7 @@ services:
 
     volumes:
     # use a named, managed volume for data volume
-    - ./server_data:/data
+    - /mnt/HC_Volume_100133373/CreateChronicles-2.0.0/server_data:/data
     # attach local host directory "mods" in same directory as this compose file
     # all mods in this directory get copied into /data/mods at startup
     #- ./mods:/mods:ro
