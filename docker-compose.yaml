@@ -1,0 +1,31 @@
+services:
+  mc:
+    image: itzg/minecraft-server
+    ports:
+    # expose the Minecraft server port outside of container
+    - "${SERVER_PORT}:25565"
+    - "${VOICE_PORT}:24454/udp"
+    environment:
+      TZ: ${TZ}
+      # REQUIRED for all types
+      EULA: ${EULA}
+      # Set server type (vs the default of vanilla)
+      TYPE: ${TYPE}
+      VERSION: ${VERSION}
+      MEMORY: ${MEMORY}
+      MAX_MEMORY: ${MAX_MEMORY}
+      DEBUG: ${DEBUG}
+      MAX_PLAYERS: ${MAX_PLAYERS}
+      PVP: ${PVP}
+      MOTD: ${MOTD}
+      GAMEMODE: ${GAMEMODE}
+      DIFFICULTY: ${DIFFICULTY}
+      OPS: ${OPS}
+      WHITELIST: ${WHITELIST}
+    volumes:
+    # host directory for server data
+    - ${DATA_DIR}:/data
+    # attach local host directory "mods" in same directory as this compose file
+    # all mods in this directory get copied into /data/mods at startup
+    #- ./mods:/mods:ro
+    restart: always
