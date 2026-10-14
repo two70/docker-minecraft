@@ -1,17 +1,30 @@
-version: "3.8"
 services:
   mc:
-    image: itzg/minecraft-server:${IMAGE_TAG:-java8-multiarch}
-    volumes:
-    - ./server_data:/data
-    - ./modpacks:/modpacks:ro
-    environment:
-      EULA: "true"
-      TYPE: FORGE
-      DEBUG: "${DEBUG:-false}"
-      VERSION: ${VERSION:-1.16.5}
-      FORGE_VERSION: ${FORGE_VERSION:-36.2.34}
-      GENERIC_PACK: /modpacks/DoctorWhoDalekExterminate-5.3.zip
-      REMOVE_OLD_MODS: "${REMOVE_OLD_MODS:-false}"
+    image: itzg/minecraft-server
     ports:
-      - "25565:25565"
+    # expose the Minecraft server port outside of container
+    - "25565:25565"
+    - "24454:24454/udp"
+    environment:
+      TZ: America/Denver
+      # REQUIRED for all types
+      EULA: "TRUE"
+      # Set server type (vs the default of vanilla)
+      TYPE: NEOFORGE
+      VERSION: 1.21.1
+      MEMORY: 6G
+      MAX_MEMORY: 8G
+      #DEBUG: "true"
+      MAX_PLAYERS: 10
+      PVP: "false"
+      MOTD: "Creat Chronicles"
+      GAMEMODE: "survival"
+      DIFFICULTY: "normal"
+
+    volumes:
+    # use a named, managed volume for data volume
+    - ./server_data:/data
+    # attach local host directory "mods" in same directory as this compose file
+    # all mods in this directory get copied into /data/mods at startup
+    #- ./mods:/mods:ro
+    restart: always
